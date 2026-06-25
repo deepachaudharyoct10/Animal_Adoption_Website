@@ -5,7 +5,7 @@ const JWT_SECRET= process.env.JWT_SECRET as string;
 
 export type TokenPayload ={
     userId: string,
-    role: ["user", "admin"];
+    role: "user" | "admin";
 };
 
 
