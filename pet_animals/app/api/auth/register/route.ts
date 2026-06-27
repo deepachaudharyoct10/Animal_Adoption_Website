@@ -38,7 +38,7 @@ export async function POST(request: NextRequest){
 
     const token = signToken({userId: user._id.toString(), role: user.role});
 
-    return NextResponse.json({
+    const response=  NextResponse.json({
         message: "User registered successfully",
         token,
         user:{
@@ -49,6 +49,9 @@ export async function POST(request: NextRequest){
             role: user.role
         }
     },{status:200});
+
+    response.headers.set("Authorization",`Bearer ${token}`);
+    return response;
 
 }
 catch(error){
