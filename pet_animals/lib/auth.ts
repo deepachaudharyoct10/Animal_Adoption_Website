@@ -24,3 +24,11 @@ export function verifyToken(request:NextRequest) {
     const token = authHeader.split(" ")[1];
     return jwt.verify(token , JWT_SECRET) as TokenPayload;
 }
+
+export function requireAdmin(request: NextRequest) {
+    const decoded = verifyToken(request);
+    if (decoded.role !== "admin") {
+        throw new Error("Admin access required");
+    }
+    return decoded;
+}

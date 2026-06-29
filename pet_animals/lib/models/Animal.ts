@@ -37,6 +37,12 @@ const AnimalSchema = new Schema({
         required: true,
     }
     ,
+    status: {
+    type: String,
+    enum: ["available", "adopted"],
+    default: "available"
+}
+
 
 
 },{timestamps: true});

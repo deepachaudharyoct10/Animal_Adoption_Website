@@ -10,7 +10,7 @@ const transport = nodemailer.createTransport({
 
 export async  function nodeMailerLink(toEmail: string, token: string){
     try{
-        const link = `http://localhost:3000/reset-password?token=${token}`;
+        const link = `http://localhost:3000/api/auth/reset-password?token=${token}`;
         await transport.sendMail({
             from: process.env.EMAIL_USER,
             to : toEmail,
