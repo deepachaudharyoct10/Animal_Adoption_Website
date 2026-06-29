@@ -6,6 +6,8 @@ const UserSchema = new Schema({
   password: { type: String, required: true },
   phone:    { type: String },
   role:     { type: String, enum: ["user", "admin"], default: "user" },
+  reset_token:   { type: String },
+  token_Expiry:  { type: Number },
 }, { timestamps: true });
 
 export const User = models.User || model("User", UserSchema);
