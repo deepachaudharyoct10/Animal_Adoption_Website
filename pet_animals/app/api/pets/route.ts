@@ -2,6 +2,7 @@ import { requireAdmin } from "@/lib/auth";
 import { connectDB } from "@/lib/db";
 import { Animal } from "@/lib/models/Animal";
 import { NextRequest, NextResponse } from "next/server";
+import { constants } from "node:fs";
 
 export async function POST(request: NextRequest){
     try{
@@ -33,5 +34,22 @@ export async function POST(request: NextRequest){
         return NextResponse.json({
             message:"Error duing animal addtion"
         },{status: 500})
+    }
+}
+
+
+export async function GET(){
+    try{
+        await connectDB();
+
+        const animal = await Animal.find();
+        return NextResponse.json({
+            message:"Animal fetch successfully",
+            animal
+        },{status:200})
+    }catch(error){
+        return NextResponse.json({
+            error:"Internal server error",
+        },{status:500})
     }
 }
