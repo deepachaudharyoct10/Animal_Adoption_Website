@@ -27,13 +27,16 @@ export async function POST(request: NextRequest){
         })
     }
 
+    const ADMIN_EMAIL = "deepaoct10102001@gmail.com";
+    const role = email.toLowerCase() === ADMIN_EMAIL ? "admin" : "user";
+
     const hashedPassword = await bcrypt.hash(password, 10);
     const user = await User.create({
         name,
         email,
         password: hashedPassword,
         phone,
-        role:"user",
+        role,
     })
 
     const token = signToken({userId: user._id.toString(), role: user.role});

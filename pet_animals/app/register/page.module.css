@@ -159,6 +159,21 @@
   text-decoration: underline;
 }
 
+.error {
+  background-color: rgba(232, 85, 58, 0.1);
+  border: 1px solid rgba(232, 85, 58, 0.3);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 13px;
+  color: #E8553A;
+}
+
+.submitBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
 @media (max-width: 480px) {
   .card {
     padding: 32px 24px;

@@ -39,6 +39,7 @@ export async function POST(request:NextRequest){
             message: "User is logged in Successfully",
             email,
             userId: findUser._id,
+            role: findUser.role,
             token
         },{status: 200})
 
@@ -50,5 +51,6 @@ export async function POST(request:NextRequest){
 
     }catch(error){
         console.log("We got an error", error);
+        return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });
     }
 }
