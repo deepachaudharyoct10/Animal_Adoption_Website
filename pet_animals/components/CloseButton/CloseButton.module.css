@@ -1,0 +1,25 @@
+.closeBtn {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: #252525;
+  border: 1px solid #333333;
+  color: #888888;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s, border-color 0.2s;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.closeBtn:hover {
+  background-color: #333333;
+  color: #FFFFFF;
+  border-color: #444444;
+}

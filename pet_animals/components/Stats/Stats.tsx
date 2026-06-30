@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import styles from "./Stats.module.css";
 
 const stats = [
@@ -12,13 +13,13 @@ export default function Stats() {
     <div className={styles.wrapper}>
       <div className={styles.stats}>
         {stats.map((stat, i) => (
-          <>
-            <div key={stat.label} className={styles.statItem}>
+          <Fragment key={stat.label}>
+            <div className={styles.statItem}>
               <span className={styles.statNumber}>{stat.number}</span>
               <p className={styles.statLabel}>{stat.label}</p>
             </div>
-            {i < stats.length - 1 && <div key={`d-${i}`} className={styles.divider} />}
-          </>
+            {i < stats.length - 1 && <div className={styles.divider} />}
+          </Fragment>
         ))}
       </div>
     </div>
