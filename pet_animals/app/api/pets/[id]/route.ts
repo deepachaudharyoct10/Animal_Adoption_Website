@@ -73,3 +73,33 @@ export async function DELETE(request: NextRequest , { params }: { params: Promis
     }
 
 }
+
+export async function GET( request: NextRequest ,{params}:{params: Promise<{id:string}>}){
+    try{
+    const {id}= await params;
+    await connectDB();
+    if(!id){
+        return NextResponse.json({
+            message:"Animals is not existing",
+        } ,{status: 400})
+    }
+
+    const searchAnimal = await Animal.findById({_id:id});
+
+    if(!searchAnimal){
+        return NextResponse.json({
+            message:"Animal id does not exist",
+        },{status: 400})
+    }
+
+    return NextResponse.json({
+        message:"animal data fetch successfully",
+        searchAnimal,
+    },{status:200})
+}
+    catch(error){
+        return NextResponse.json({
+            message:"Animal data is fetching correctly",
+        },{status:500})
+    }
+}
