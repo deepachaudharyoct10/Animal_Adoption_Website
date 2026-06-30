@@ -1,0 +1,230 @@
+.ctaBanner {
+  background: linear-gradient(135deg, #1A1210, #2A1810);
+  margin: 0 56px 56px;
+  border-radius: 28px;
+  border: 1px solid #2A2020;
+  padding: 80px 64px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.ctaBg {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 600px;
+  height: 300px;
+  background: radial-gradient(ellipse, rgba(232, 85, 58, 0.1) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.ctaTitle {
+  font-size: 52px;
+  font-weight: 900;
+  color: white;
+  margin: 0 0 16px 0;
+  letter-spacing: -1.5px;
+  position: relative;
+  z-index: 1;
+}
+
+.ctaDesc {
+  font-size: 16px;
+  color: #777777;
+  margin-bottom: 36px;
+  position: relative;
+  z-index: 1;
+}
+
+.ctaBtn {
+  display: inline-block;
+  background: linear-gradient(135deg, #E8553A, #C4402A);
+  color: white;
+  padding: 16px 36px;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.2s, transform 0.15s;
+  box-shadow: 0 6px 20px rgba(232, 85, 58, 0.4);
+  position: relative;
+  z-index: 1;
+}
+
+.ctaBtn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.footer {
+  background-color: #0D0D0D;
+  padding: 56px;
+  border-top: 1px solid #1A1A1A;
+}
+
+.footerGrid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 48px;
+}
+
+.footerLogo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  text-decoration: none;
+}
+
+.footerLogoIcon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, #E8553A, #C4402A);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 800;
+  font-size: 16px;
+}
+
+.footerLogoName {
+  font-size: 17px;
+  font-weight: 800;
+  color: #FFFFFF;
+}
+
+.footerBrand p {
+  font-size: 13px;
+  color: #444444;
+  line-height: 1.7;
+  max-width: 220px;
+}
+
+.footerCol h4 {
+  font-size: 13px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0 0 18px 0;
+  letter-spacing: 0.3px;
+}
+
+.footerCol ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footerCol a {
+  font-size: 13px;
+  color: #444444;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footerCol a:hover {
+  color: #FFFFFF;
+}
+
+.footerBottom {
+  border-top: 1px solid #1A1A1A;
+  padding-top: 28px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.copyright {
+  font-size: 13px;
+  color: #333333;
+}
+
+.footerLinks {
+  display: flex;
+  gap: 24px;
+}
+
+.footerLinks a {
+  font-size: 13px;
+  color: #333333;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.footerLinks a:hover {
+  color: #AAAAAA;
+}
+
+@media (max-width: 1024px) {
+  .ctaBanner {
+    margin: 0 32px 40px;
+    padding: 56px 40px;
+  }
+
+  .ctaTitle {
+    font-size: 40px;
+  }
+
+  .footer {
+    padding: 48px 32px;
+  }
+
+  .footerGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .ctaBanner {
+    margin: 0 20px 32px;
+    padding: 48px 28px;
+    border-radius: 20px;
+  }
+
+  .ctaTitle {
+    font-size: 30px;
+    letter-spacing: -0.5px;
+  }
+
+  .ctaDesc {
+    font-size: 14px;
+  }
+
+  .ctaBtn {
+    padding: 13px 28px;
+    font-size: 15px;
+  }
+
+  .footer {
+    padding: 40px 20px;
+  }
+
+  .footerGrid {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+  }
+
+  .footerBottom {
+    flex-direction: column;
+    gap: 16px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .footerGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .footerLinks {
+    gap: 16px;
+  }
+}

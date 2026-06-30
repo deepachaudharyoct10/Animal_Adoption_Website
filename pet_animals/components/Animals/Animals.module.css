@@ -1,0 +1,250 @@
+.section {
+  padding: 100px 56px;
+}
+
+.header {
+  margin-bottom: 40px;
+}
+
+.sectionTag {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #E8553A;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+  display: block;
+}
+
+.titleRow {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 32px;
+}
+
+.sectionTitle {
+  font-size: 46px;
+  font-weight: 900;
+  color: #FFFFFF;
+  letter-spacing: -1px;
+  line-height: 1.05;
+}
+
+.seeAll {
+  color: #E8553A;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+
+.seeAll:hover {
+  border-bottom-color: #E8553A;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.filterBtn {
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: 1px solid #2A2A2A;
+  background-color: #161616;
+  color: #777777;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.filterBtn:hover {
+  background-color: #1E1E1E;
+  color: #CCCCCC;
+  border-color: #444444;
+}
+
+.filterBtnActive {
+  background: linear-gradient(135deg, #E8553A, #C4402A);
+  color: white;
+  border-color: transparent;
+  box-shadow: 0 4px 12px rgba(232, 85, 58, 0.35);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.card {
+  background: linear-gradient(145deg, #1A1A1A, #161616);
+  border: 1px solid #2A2A2A;
+  border-radius: 20px;
+  overflow: hidden;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+}
+
+.card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  border-color: #3A3A3A;
+}
+
+.cardImage {
+  background: #252525;
+  height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: #444444;
+  font-family: monospace;
+  position: relative;
+  padding: 14px;
+}
+
+.cardBadges {
+  position: absolute;
+  top: 14px;
+  left: 14px;
+  right: 14px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.typeBadge {
+  background-color: rgba(255,255,255,0.08);
+  border: 1px solid #333333;
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #AAAAAA;
+}
+
+.availBadge {
+  background: rgba(232, 85, 58, 0.15);
+  border: 1px solid rgba(232, 85, 58, 0.35);
+  border-radius: 8px;
+  padding: 4px 10px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #E8553A;
+  letter-spacing: 0.8px;
+}
+
+.cardBody {
+  padding: 20px;
+}
+
+.cardName {
+  font-size: 20px;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0 0 4px 0;
+  letter-spacing: -0.3px;
+}
+
+.cardLocation {
+  font-size: 13px;
+  color: #555555;
+  margin-left: 8px;
+  font-weight: 400;
+}
+
+.cardMeta {
+  font-size: 13px;
+  color: #555555;
+  margin: 6px 0 14px;
+}
+
+.cardTrait {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background-color: #252525;
+  border: 1px solid #2A2A2A;
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 12px;
+  color: #AAAAAA;
+  margin-bottom: 16px;
+}
+
+.traitDot {
+  color: #E8553A;
+  font-size: 8px;
+}
+
+.meetBtn {
+  display: block;
+  text-align: center;
+  color: #E8553A;
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px;
+  border: 1px solid #2A2A2A;
+  border-radius: 10px;
+  letter-spacing: 0.3px;
+  transition: all 0.2s;
+}
+
+.meetBtn:hover {
+  background-color: rgba(232, 85, 58, 0.08);
+  border-color: rgba(232, 85, 58, 0.35);
+}
+
+@media (max-width: 1024px) {
+  .section {
+    padding: 72px 32px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sectionTitle {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 56px 20px;
+  }
+
+  .titleRow {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .sectionTitle {
+    font-size: 32px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filters {
+    overflow-x: auto;
+    padding-bottom: 8px;
+    flex-wrap: nowrap;
+  }
+
+  .filterBtn {
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+}
