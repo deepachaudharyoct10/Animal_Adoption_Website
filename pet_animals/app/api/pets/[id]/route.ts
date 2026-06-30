@@ -39,3 +39,37 @@ export async function PUT(
         }, { status: 500 });
     }
 }
+
+export async function DELETE(request: NextRequest , { params }: { params: Promise<{ id: string }> }){
+    try{
+   
+    requireAdmin(request);
+    const {id}=  await params ;
+
+    if(!id){
+        return NextResponse.json({
+            message:"NO animal id for deletaion",
+        },{status:400})
+    }
+
+    await connectDB();
+    const deletedAnimal = await Animal.findByIdAndDelete(id);
+
+    if(!deletedAnimal){
+        return NextResponse.json({
+            message:"No animal is deleted  , getting error",
+        },{status:400})
+    }
+
+    return NextResponse.json({
+        message:"Animal deleted successfully",
+        deletedAnimal
+    },{status:200})
+}
+     catch(error){
+        NextResponse.json({
+            message:`there are some issue ${error}`,
+        },{status:500})
+    }
+
+}

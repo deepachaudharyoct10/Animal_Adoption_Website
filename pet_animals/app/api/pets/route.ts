@@ -2,7 +2,6 @@ import { requireAdmin } from "@/lib/auth";
 import { connectDB } from "@/lib/db";
 import { Animal } from "@/lib/models/Animal";
 import { NextRequest, NextResponse } from "next/server";
-import { constants } from "node:fs";
 
 export async function POST(request: NextRequest){
     try{
