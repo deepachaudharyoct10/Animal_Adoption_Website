@@ -1,7 +1,34 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./Navbar.module.css";
 import Link from "next/link";
 
+interface StoredUser {
+  role: "user" | "admin";
+  email?: string;
+}
+
 export default function Navbar() {
+  const router = useRouter();
+  const [user, setUser] = useState<StoredUser | null>(null);
+
+  useEffect(() => {
+    const stored = localStorage.getItem("user");
+    // Client-only auth check: intentionally patches state after mount to avoid
+    // an SSR/client hydration mismatch (localStorage isn't available on the server).
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setUser(stored ? JSON.parse(stored) : null);
+  }, []);
+
+  function handleLogout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    setUser(null);
+    router.push("/");
+  }
+
   return (
     <nav className={styles.navbar}>
       <Link href="/" className={styles.logo}>
@@ -20,8 +47,19 @@ export default function Navbar() {
       </ul>
 
       <div className={styles.navActions}>
-        <Link href="/login" className={styles.loginLink}>Log in</Link>
-        <Link href="/register" className={styles.signupBtn}>Sign up</Link>
+        {user ? (
+          <>
+            {user.role === "admin" && (
+              <Link href="/admin" className={styles.loginLink}>Admin</Link>
+            )}
+            <button onClick={handleLogout} className={styles.signupBtn}>Log out</button>
+          </>
+        ) : (
+          <>
+            <Link href="/login" className={styles.loginLink}>Log in</Link>
+            <Link href="/register" className={styles.signupBtn}>Sign up</Link>
+          </>
+        )}
       </div>
     </nav>
   );

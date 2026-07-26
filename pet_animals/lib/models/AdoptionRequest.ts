@@ -1,6 +1,4 @@
 import {Schema, model, models} from "mongoose";
-import { User } from "./User";
-import {Animal} from "./Animal";
 const AdoptionRequestSchema = new Schema({
 
     user:{

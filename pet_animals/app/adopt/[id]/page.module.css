@@ -1,0 +1,264 @@
+.page {
+  background-color: #0D0D0D;
+  min-height: 100vh;
+}
+
+.content {
+  padding: 56px;
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 48px;
+  align-items: start;
+}
+
+.imageBox {
+  background: #252525;
+  border-radius: 20px;
+  height: 420px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #444444;
+  font-family: monospace;
+  overflow: hidden;
+}
+
+.imageBox img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.badges {
+  display: flex;
+  gap: 10px;
+  margin: 20px 0 12px;
+}
+
+.typeBadge, .statusBadge {
+  border-radius: 8px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+}
+
+.typeBadge {
+  background-color: rgba(255,255,255,0.08);
+  border: 1px solid #333333;
+  color: #AAAAAA;
+}
+
+.statusBadge {
+  background: rgba(232, 85, 58, 0.15);
+  border: 1px solid rgba(232, 85, 58, 0.35);
+  color: #E8553A;
+  text-transform: uppercase;
+}
+
+.name {
+  font-size: 40px;
+  font-weight: 900;
+  color: #FFFFFF;
+  letter-spacing: -1px;
+  margin: 0 0 6px;
+}
+
+.location {
+  font-size: 14px;
+  color: #666666;
+  margin: 0 0 24px;
+}
+
+.infoGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+.infoItem {
+  background: linear-gradient(145deg, #1A1A1A, #161616);
+  border: 1px solid #2A2A2A;
+  border-radius: 14px;
+  padding: 16px 18px;
+}
+
+.infoLabel {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  color: #555555;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.infoValue {
+  font-size: 15px;
+  color: #FFFFFF;
+  font-weight: 600;
+}
+
+.storyBox {
+  background: linear-gradient(145deg, #1A1A1A, #161616);
+  border: 1px solid #2A2A2A;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 28px;
+}
+
+.storyTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0 0 10px;
+}
+
+.storyText {
+  font-size: 14px;
+  color: #999999;
+  line-height: 1.7;
+}
+
+.actions {
+  display: flex;
+  gap: 14px;
+}
+
+.adoptBtn {
+  background: linear-gradient(135deg, #E8553A, #C4402A);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 6px 20px rgba(232, 85, 58, 0.35);
+}
+
+.donateBtn {
+  background: transparent;
+  color: #FFFFFF;
+  border: 1px solid #2A2A2A;
+  padding: 14px 28px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}
+
+.formCard {
+  background: linear-gradient(145deg, #1A1A1A, #161616);
+  border: 1px solid #2A2A2A;
+  border-radius: 24px;
+  padding: 32px;
+  position: sticky;
+  top: 88px;
+}
+
+.formTitle {
+  font-size: 20px;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin: 0 0 4px;
+}
+
+.formSubtitle {
+  font-size: 13px;
+  color: #666666;
+  margin: 0 0 24px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #AAAAAA;
+}
+
+.input, .textarea {
+  background-color: #252525;
+  border: 1px solid #2A2A2A;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #FFFFFF;
+  outline: none;
+  width: 100%;
+  font-family: inherit;
+}
+
+.input:focus, .textarea:focus { border-color: #E8553A; }
+
+.textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+
+.submitBtn {
+  background: linear-gradient(135deg, #E8553A, #C4402A);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+.submitBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.error {
+  background-color: rgba(232, 85, 58, 0.1);
+  border: 1px solid rgba(232, 85, 58, 0.3);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 13px;
+  color: #E8553A;
+}
+
+.success {
+  background-color: rgba(106, 154, 90, 0.1);
+  border: 1px solid rgba(106, 154, 90, 0.3);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 13px;
+  color: #6A9A5A;
+}
+
+.loginPrompt {
+  font-size: 14px;
+  color: #999999;
+  text-align: center;
+}
+
+.loginPrompt a {
+  color: #E8553A;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+@media (max-width: 1024px) {
+  .content { grid-template-columns: 1fr; padding: 40px 24px; }
+  .formCard { position: static; }
+}

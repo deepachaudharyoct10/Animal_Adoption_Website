@@ -33,7 +33,7 @@ export default function LoginPage() {
 
       const data = await res.json();
 
-      if (!res.ok) {
+      if (!res.ok || !data.token) {
         setError(data.message || "Login failed. Please try again.");
         return;
       }

@@ -14,8 +14,8 @@ export async function POST(request:NextRequest){
 
         if(!email || !password){
             return NextResponse.json({
-               "Messaage": "All field are required"
-            })
+               message: "All fields are required"
+            }, { status: 400 })
         }
 
          await connectDB();
@@ -24,15 +24,15 @@ export async function POST(request:NextRequest){
 
         if(!findUser){
             return NextResponse.json({
-                "message":"User is not existing ,pls register in"
-            })
+                message:"User is not existing ,pls register in"
+            }, { status: 401 })
         }
 
         const isPasswordCorrect= await bcrypt.compare(password, findUser.password)
         if(!isPasswordCorrect){
             return NextResponse.json({
                 message:"Please enter the correct password"
-            })
+            }, { status: 401 })
         }
         const token = signToken({userId: findUser._id.toString(), role: findUser.role})
         const response = NextResponse.json({

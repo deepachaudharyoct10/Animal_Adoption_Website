@@ -1,7 +1,15 @@
 import { requireAdmin } from "@/lib/auth";
 import { connectDB } from "@/lib/db";
+import { uploadImage } from "@/lib/cloudinary";
 import { Animal } from "@/lib/models/Animal";
 import { NextRequest, NextResponse } from "next/server";
+
+async function resolveImages(images: string[] | undefined): Promise<string[] | undefined> {
+    if (!images) return undefined;
+    return Promise.all(
+        images.map((image) => (image.startsWith("data:") ? uploadImage(image, "animals") : image))
+    );
+}
 
 export async function PUT(
     request: NextRequest,
@@ -15,9 +23,11 @@ export async function PUT(
 
         await connectDB();
 
+        const resolvedImages = await resolveImages(body.images);
+
         const updatedAnimal = await Animal.findByIdAndUpdate(
             id,
-            { ...body },
+            { ...body, ...(resolvedImages ? { images: resolvedImages } : {}) },
             { returnDocument: "after" }
         );
 

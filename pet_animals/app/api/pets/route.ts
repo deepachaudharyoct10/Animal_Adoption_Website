@@ -1,7 +1,15 @@
 import { requireAdmin } from "@/lib/auth";
 import { connectDB } from "@/lib/db";
+import { uploadImage } from "@/lib/cloudinary";
 import { Animal } from "@/lib/models/Animal";
 import { NextRequest, NextResponse } from "next/server";
+
+async function resolveImages(images: string[] | undefined): Promise<string[]> {
+    if (!images || images.length === 0) return [];
+    return Promise.all(
+        images.map((image) => (image.startsWith("data:") ? uploadImage(image, "animals") : image))
+    );
+}
 
 export async function POST(request: NextRequest){
     try{
@@ -18,8 +26,10 @@ export async function POST(request: NextRequest){
 
         await connectDB();
 
+        const resolvedImages = await resolveImages(images);
+
         const data ={name, type, age, breed, gender,healthStatus,
-                vaccinationStatus, rescueStory, images, location , status };
+                vaccinationStatus, rescueStory, images: resolvedImages, location , status };
 
         const createAnimal = await Animal.create(data);
         return NextResponse.json({

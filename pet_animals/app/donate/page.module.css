@@ -1,0 +1,153 @@
+.page {
+  background-color: #0D0D0D;
+  min-height: 100vh;
+}
+
+.hero {
+  padding: 72px 56px 40px;
+  text-align: center;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #1A2A1A;
+  border: 1px solid #2A3A2A;
+  border-radius: 20px;
+  padding: 7px 16px;
+  font-size: 13px;
+  color: #6A9A5A;
+  margin-bottom: 20px;
+}
+
+.tagDot {
+  width: 7px;
+  height: 7px;
+  background-color: #6A9A5A;
+  border-radius: 50%;
+}
+
+.title {
+  font-size: 44px;
+  font-weight: 900;
+  color: #FFFFFF;
+  margin: 0 0 12px;
+  letter-spacing: -1px;
+}
+
+.desc {
+  font-size: 15px;
+  color: #666666;
+  max-width: 520px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+.content {
+  max-width: 460px;
+  margin: 0 auto 80px;
+  padding: 0 20px;
+}
+
+.formCard {
+  background: linear-gradient(145deg, #1A1A1A, #161616);
+  border: 1px solid #2A2A2A;
+  border-radius: 24px;
+  padding: 36px;
+}
+
+.amounts {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.amountBtn {
+  padding: 12px 8px;
+  border: 1px solid #2A2A2A;
+  border-radius: 10px;
+  background-color: #161616;
+  font-size: 14px;
+  font-weight: 600;
+  color: #777777;
+  cursor: pointer;
+}
+
+.amountBtnActive {
+  border-color: #E8553A;
+  color: #E8553A;
+  background-color: rgba(232, 85, 58, 0.1);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #AAAAAA;
+}
+
+.input {
+  background-color: #252525;
+  border: 1px solid #2A2A2A;
+  border-radius: 10px;
+  padding: 12px 16px;
+  font-size: 14px;
+  color: #FFFFFF;
+  outline: none;
+  width: 100%;
+}
+
+.input:focus { border-color: #E8553A; }
+
+.submitBtn {
+  background: linear-gradient(135deg, #E8553A, #C4402A);
+  color: white;
+  border: none;
+  padding: 15px;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.submitBtn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.error {
+  background-color: rgba(232, 85, 58, 0.1);
+  border: 1px solid rgba(232, 85, 58, 0.3);
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 13px;
+  color: #E8553A;
+  margin-bottom: 16px;
+}
+
+.success {
+  background-color: rgba(106, 154, 90, 0.1);
+  border: 1px solid rgba(106, 154, 90, 0.3);
+  border-radius: 10px;
+  padding: 16px;
+  font-size: 14px;
+  color: #6A9A5A;
+  text-align: center;
+}
+
+.secureNote {
+  text-align: center;
+  font-size: 12px;
+  color: #444444;
+  margin-top: 16px;
+}

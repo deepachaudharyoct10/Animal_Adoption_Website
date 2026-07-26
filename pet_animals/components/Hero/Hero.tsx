@@ -1,7 +1,23 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import styles from "./Hero.module.css";
 import Link from "next/link";
+import { Animal } from "@/lib/types";
 
 export default function Hero() {
+  const [featured, setFeatured] = useState<Animal | null>(null);
+
+  useEffect(() => {
+    fetch("/api/pets")
+      .then((res) => res.json())
+      .then((data) => {
+        const available = (data.animal ?? []).filter((a: Animal) => a.status === "available" && a.images?.[0]);
+        setFeatured(available[0] ?? null);
+      })
+      .catch(() => setFeatured(null));
+  }, []);
+
   return (
     <section className={styles.hero}>
       <div className={styles.heroBg} />
@@ -49,16 +65,37 @@ export default function Hero() {
           <div className={styles.floatingBadge}>🐾 New arrivals today</div>
           <div className={styles.animalCard}>
             <span className={styles.cardBadge}>AVAILABLE NOW</span>
-            <div className={styles.cardImagePlaceholder}>
-              photo · golden retriever
-            </div>
-            <div className={styles.cardInfo}>
-              <div className={styles.cardInfoAvatar}></div>
-              <div className={styles.cardInfoText}>
-                <strong>Biscuit</strong>
-                <span>Found his family — 3 days ago</span>
-              </div>
-            </div>
+            {featured ? (
+              <>
+                <div className={styles.cardImagePlaceholder} style={{ padding: 0 }}>
+                  <img
+                    src={featured.images![0]}
+                    alt={featured.name}
+                    style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: 16 }}
+                  />
+                </div>
+                <div className={styles.cardInfo}>
+                  <div className={styles.cardInfoAvatar}></div>
+                  <div className={styles.cardInfoText}>
+                    <strong>{featured.name}</strong>
+                    <span>{[featured.breed, featured.location].filter(Boolean).join(" · ")}</span>
+                  </div>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className={styles.cardImagePlaceholder}>
+                  photo · golden retriever
+                </div>
+                <div className={styles.cardInfo}>
+                  <div className={styles.cardInfoAvatar}></div>
+                  <div className={styles.cardInfoText}>
+                    <strong>Biscuit</strong>
+                    <span>Found his family — 3 days ago</span>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </div>

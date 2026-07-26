@@ -241,6 +241,9 @@
   position: absolute;
   top: -12px;
   right: -12px;
+  z-index: 2;
+  max-width: calc(100% - 12px);
+  white-space: nowrap;
   background: linear-gradient(135deg, #E8553A, #C4402A);
   color: white;
   font-size: 11px;
@@ -307,6 +310,15 @@
 
   .heroBg, .heroBg2 {
     display: none;
+  }
+
+  .cardWrapper {
+    margin-top: 28px;
+  }
+
+  .floatingBadge {
+    font-size: 10px;
+    padding: 5px 10px;
   }
 }
 
