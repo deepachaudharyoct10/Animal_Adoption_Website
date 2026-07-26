@@ -13,13 +13,23 @@ const DonationSchema = new Schema({
     ,
     donorPhone:{
         type:String,
-        required:true,
     }
     ,
+    email:{
+        type:String,
+    },
     amount:{
         type:Number,
         required:true,
 
+    },
+    purpose:{
+        type:String,
+    },
+    transactionId:{
+        type:String,
+        required:true,
+        unique:true,
     }
 },{timestamps:true});
 

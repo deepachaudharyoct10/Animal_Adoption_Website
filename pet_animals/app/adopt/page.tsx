@@ -1,26 +1,85 @@
+"use client";
+
+import { useEffect, useMemo, useState } from "react";
 import styles from "./page.module.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
 import Link from "next/link";
+import { Animal } from "@/lib/types";
 
-const animals = [
-  { id: 1,  name: "Biscuit", location: "Mumbai",   type: "Dog",    breed: "Golden Retriever", age: "2 yrs",  gender: "Male",   trait: "Good with kids",  image: "photo · golden retriever" },
-  { id: 2,  name: "Luna",    location: "Delhi",     type: "Cat",    breed: "Tabby",            age: "1 yr",   gender: "Female", trait: "House-trained",   image: "photo · grey tabby cat" },
-  { id: 3,  name: "Clover",  location: "Bengaluru", type: "Rabbit", breed: "Lop",              age: "8 mo",   gender: "Female", trait: "Loves cuddles",   image: "photo · lop rabbit" },
-  { id: 4,  name: "Rusty",   location: "Chennai",   type: "Dog",    breed: "Beagle mix",       age: "4 yrs",  gender: "Male",   trait: "House-trained",   image: "photo · beagle mix" },
-  { id: 5,  name: "Mochi",   location: "Hyderabad", type: "Cat",    breed: "Calico",           age: "6 mo",   gender: "Female", trait: "Shy & sweet",     image: "photo · calico kitten" },
-  { id: 6,  name: "Pip",     location: "Pune",      type: "Bird",   breed: "Cockatiel",        age: "2 yrs",  gender: "Male",   trait: "Hand-tame",       image: "photo · grey cockatiel" },
-  { id: 7,  name: "Max",     location: "Mumbai",    type: "Dog",    breed: "Labrador",         age: "3 yrs",  gender: "Male",   trait: "Energetic",       image: "photo · labrador" },
-  { id: 8,  name: "Bella",   location: "Delhi",     type: "Cat",    breed: "Persian",          age: "2 yrs",  gender: "Female", trait: "Calm & gentle",   image: "photo · persian cat" },
-  { id: 9,  name: "Oliver",  location: "Bengaluru", type: "Rabbit", breed: "Angora",           age: "1 yr",   gender: "Male",   trait: "Fluffy & playful",image: "photo · angora rabbit" },
-];
+const genders = ["male", "female"];
+const ageRanges = ["Under 1 year", "1–3 years", "3–7 years", "7+ years"];
 
-const types   = ["Dog", "Cat", "Rabbit", "Bird"];
-const genders = ["Male", "Female"];
-const ages    = ["Under 1 year", "1–3 years", "3–7 years", "7+ years"];
-const cities  = ["Mumbai", "Delhi", "Bengaluru", "Chennai", "Hyderabad", "Pune"];
+function ageBucket(age?: number): string | null {
+  if (age == null) return null;
+  if (age < 1) return "Under 1 year";
+  if (age <= 3) return "1–3 years";
+  if (age <= 7) return "3–7 years";
+  return "7+ years";
+}
 
 export default function AdoptPage() {
+  const [animals, setAnimals] = useState<Animal[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
+  const [selectedTypes, setSelectedTypes] = useState<string[]>([]);
+  const [selectedGender, setSelectedGender] = useState<string | null>(null);
+  const [selectedAges, setSelectedAges] = useState<string[]>([]);
+  const [selectedLocations, setSelectedLocations] = useState<string[]>([]);
+  const [sort, setSort] = useState("Newest first");
+
+  useEffect(() => {
+    fetch("/api/pets")
+      .then((res) => res.json())
+      .then((data) => setAnimals((data.animal ?? []).filter((a: Animal) => a.status === "available")))
+      .catch(() => setAnimals([]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const types = useMemo(() => Array.from(new Set(animals.map((a) => a.type))), [animals]);
+  const locations = useMemo(() => Array.from(new Set(animals.map((a) => a.location))), [animals]);
+
+  function toggle(list: string[], value: string, setter: (v: string[]) => void) {
+    setter(list.includes(value) ? list.filter((v) => v !== value) : [...list, value]);
+  }
+
+  const filtered = useMemo(() => {
+    let result = animals.filter((a) => {
+      const matchesSearch =
+        !search ||
+        a.name.toLowerCase().includes(search.toLowerCase()) ||
+        (a.breed ?? "").toLowerCase().includes(search.toLowerCase()) ||
+        a.type.toLowerCase().includes(search.toLowerCase());
+      const matchesType = selectedTypes.length === 0 || selectedTypes.includes(a.type);
+      const matchesGender = !selectedGender || a.gender === selectedGender;
+      const matchesAge = selectedAges.length === 0 || selectedAges.includes(ageBucket(a.age) ?? "");
+      const matchesLocation = selectedLocations.length === 0 || selectedLocations.includes(a.location);
+      return matchesSearch && matchesType && matchesGender && matchesAge && matchesLocation;
+    });
+
+    if (sort === "Name A–Z") {
+      result = [...result].sort((a, b) => a.name.localeCompare(b.name));
+    } else if (sort === "Oldest first") {
+      result = [...result].sort(
+        (a, b) => new Date(a.createdAt ?? 0).getTime() - new Date(b.createdAt ?? 0).getTime()
+      );
+    } else {
+      result = [...result].sort(
+        (a, b) => new Date(b.createdAt ?? 0).getTime() - new Date(a.createdAt ?? 0).getTime()
+      );
+    }
+
+    return result;
+  }, [animals, search, selectedTypes, selectedGender, selectedAges, selectedLocations, sort]);
+
+  function clearFilters() {
+    setSearch("");
+    setSelectedTypes([]);
+    setSelectedGender(null);
+    setSelectedAges([]);
+    setSelectedLocations([]);
+  }
+
   return (
     <div className={styles.page}>
       <Navbar />
@@ -34,7 +93,13 @@ export default function AdoptPage() {
         <p className={styles.subtitle}>Browse {animals.length} animals waiting for their forever home</p>
 
         <div className={styles.searchBar}>
-          <input className={styles.searchInput} type="text" placeholder="Search by name or breed..." />
+          <input
+            className={styles.searchInput}
+            type="text"
+            placeholder="Search by name or breed..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
           <button className={styles.searchBtn}>Search</button>
         </div>
       </section>
@@ -47,10 +112,14 @@ export default function AdoptPage() {
             <div className={styles.filterOptions}>
               {types.map((t) => (
                 <label key={t} className={styles.filterOption}>
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    checked={selectedTypes.includes(t)}
+                    onChange={() => toggle(selectedTypes, t, setSelectedTypes)}
+                  />
                   <span className={styles.filterOptionLabel}>
                     {t}
-                    <span className={styles.filterCount}>{animals.filter(a => a.type === t).length}</span>
+                    <span className={styles.filterCount}>{animals.filter((a) => a.type === t).length}</span>
                   </span>
                 </label>
               ))}
@@ -62,10 +131,15 @@ export default function AdoptPage() {
             <div className={styles.filterOptions}>
               {genders.map((g) => (
                 <label key={g} className={styles.filterOption}>
-                  <input type="radio" name="gender" />
+                  <input
+                    type="radio"
+                    name="gender"
+                    checked={selectedGender === g}
+                    onChange={() => setSelectedGender(selectedGender === g ? null : g)}
+                  />
                   <span className={styles.filterOptionLabel}>
                     {g}
-                    <span className={styles.filterCount}>{animals.filter(a => a.gender === g).length}</span>
+                    <span className={styles.filterCount}>{animals.filter((a) => a.gender === g).length}</span>
                   </span>
                 </label>
               ))}
@@ -75,9 +149,13 @@ export default function AdoptPage() {
           <div className={styles.filterGroup}>
             <h3 className={styles.filterGroupTitle}>Age range</h3>
             <div className={styles.filterOptions}>
-              {ages.map((a) => (
+              {ageRanges.map((a) => (
                 <label key={a} className={styles.filterOption}>
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    checked={selectedAges.includes(a)}
+                    onChange={() => toggle(selectedAges, a, setSelectedAges)}
+                  />
                   <span className={styles.filterOptionLabel}>{a}</span>
                 </label>
               ))}
@@ -87,58 +165,72 @@ export default function AdoptPage() {
           <div className={styles.filterGroup}>
             <h3 className={styles.filterGroupTitle}>Location</h3>
             <div className={styles.filterOptions}>
-              {cities.map((c) => (
+              {locations.map((c) => (
                 <label key={c} className={styles.filterOption}>
-                  <input type="checkbox" />
+                  <input
+                    type="checkbox"
+                    checked={selectedLocations.includes(c)}
+                    onChange={() => toggle(selectedLocations, c, setSelectedLocations)}
+                  />
                   <span className={styles.filterOptionLabel}>
                     {c}
-                    <span className={styles.filterCount}>{animals.filter(a => a.location === c).length}</span>
+                    <span className={styles.filterCount}>{animals.filter((a) => a.location === c).length}</span>
                   </span>
                 </label>
               ))}
             </div>
           </div>
 
-          <button className={styles.clearBtn}>Clear all filters</button>
+          <button className={styles.clearBtn} onClick={clearFilters}>Clear all filters</button>
         </aside>
 
         <main className={styles.main}>
           <div className={styles.topBar}>
-            <p className={styles.resultCount}><span>{animals.length}</span> animals found</p>
-            <select className={styles.sortSelect}>
+            <p className={styles.resultCount}><span>{filtered.length}</span> animals found</p>
+            <select className={styles.sortSelect} value={sort} onChange={(e) => setSort(e.target.value)}>
               <option>Newest first</option>
               <option>Oldest first</option>
               <option>Name A–Z</option>
             </select>
           </div>
 
-          <div className={styles.grid}>
-            {animals.map((animal) => (
-              <div key={animal.id} className={styles.card}>
-                <div className={styles.cardImage}>
-                  <div className={styles.cardBadges}>
-                    <span className={styles.typeBadge}>{animal.type}</span>
-                    <span className={styles.availBadge}>AVAILABLE</span>
+          {loading ? (
+            <p>Loading animals...</p>
+          ) : filtered.length === 0 ? (
+            <p>No animals match your filters.</p>
+          ) : (
+            <div className={styles.grid}>
+              {filtered.map((animal) => (
+                <div key={animal._id} className={styles.card}>
+                  <div className={styles.cardImage}>
+                    <div className={styles.cardBadges}>
+                      <span className={styles.typeBadge}>{animal.type}</span>
+                      <span className={styles.availBadge}>AVAILABLE</span>
+                    </div>
+                    {animal.images?.[0] ? (
+                      <img src={animal.images[0]} alt={animal.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                    ) : (
+                      `photo · ${animal.name}`
+                    )}
                   </div>
-                  {animal.image}
-                </div>
-                <div className={styles.cardBody}>
-                  <h3 className={styles.cardName}>
-                    {animal.name}
-                    <span className={styles.cardLocation}>{animal.location}</span>
-                  </h3>
-                  <p className={styles.cardMeta}>{animal.breed} · {animal.age} · {animal.gender}</p>
-                  <div className={styles.cardTrait}>
-                    <span className={styles.traitDot}>●</span>
-                    {animal.trait}
+                  <div className={styles.cardBody}>
+                    <h3 className={styles.cardName}>
+                      {animal.name}
+                      <span className={styles.cardLocation}>{animal.location}</span>
+                    </h3>
+                    <p className={styles.cardMeta}>
+                      {[animal.breed, animal.age ? `${animal.age} yrs` : null, animal.gender]
+                        .filter(Boolean)
+                        .join(" · ")}
+                    </p>
+                    <Link href={`/adopt/${animal._id}`} className={styles.meetBtn}>
+                      Meet {animal.name}
+                    </Link>
                   </div>
-                  <Link href={`/adopt/${animal.id}`} className={styles.meetBtn}>
-                    Meet {animal.name}
-                  </Link>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </main>
       </div>
 

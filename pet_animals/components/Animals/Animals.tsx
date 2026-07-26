@@ -1,18 +1,32 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import styles from "./Animals.module.css";
 import Link from "next/link";
+import { Animal } from "@/lib/types";
 
-const animals = [
-  { id: 1, name: "Biscuit", location: "Portland", type: "Dog", breed: "Golden Retriever", age: "2 yrs", gender: "Male", trait: "Good with kids", image: "photo · golden retriever" },
-  { id: 2, name: "Luna",    location: "Austin",   type: "Cat", breed: "Tabby",            age: "1 yr",  gender: "Female", trait: "House-trained",  image: "photo · grey tabby cat" },
-  { id: 3, name: "Clover",  location: "Denver",   type: "Rabbit", breed: "Lop",           age: "8 mo",  gender: "Female", trait: "Loves cuddles",  image: "photo · lop-eared rabbit" },
-  { id: 4, name: "Rusty",   location: "Seattle",  type: "Dog", breed: "Beagle mix",       age: "4 yrs", gender: "Male",   trait: "House-trained",  image: "photo · beagle mix dog" },
-  { id: 5, name: "Mochi",   location: "Chicago",  type: "Cat", breed: "Calico",           age: "6 mo",  gender: "Female", trait: "Shy & sweet",    image: "photo · calico kitten" },
-  { id: 6, name: "Pip",     location: "Boston",   type: "Bird", breed: "Cockatiel",       age: "2 yrs", gender: "Male",   trait: "Hand-tame",      image: "photo · grey cockatiel" },
-];
-
-const filters = ["All animals", "Dogs", "Cats", "Rabbits", "Birds"];
+const filters = ["All animals", "Dog", "Cat", "Rabbit", "Bird"];
 
 export default function Animals() {
+  const [animals, setAnimals] = useState<Animal[]>([]);
+  const [activeFilter, setActiveFilter] = useState(filters[0]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/pets")
+      .then((res) => res.json())
+      .then((data) => setAnimals(data.animal ?? []))
+      .catch(() => setAnimals([]))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const available = animals.filter((a) => a.status === "available");
+  const visible = (
+    activeFilter === "All animals"
+      ? available
+      : available.filter((a) => a.type === activeFilter)
+  ).slice(0, 6);
+
   return (
     <section className={styles.section}>
       <p className={styles.sectionTag}>Ready for Adoption</p>
@@ -20,40 +34,54 @@ export default function Animals() {
       <Link href="/adopt" className={styles.seeAll}>See all animals →</Link>
 
       <div className={styles.filters}>
-        {filters.map((f, i) => (
-          <button key={f} className={`${styles.filterBtn} ${i === 0 ? styles.filterBtnActive : ""}`}>
+        {filters.map((f) => (
+          <button
+            key={f}
+            className={`${styles.filterBtn} ${f === activeFilter ? styles.filterBtnActive : ""}`}
+            onClick={() => setActiveFilter(f)}
+          >
             {f}
           </button>
         ))}
       </div>
 
-      <div className={styles.grid}>
-        {animals.map((animal) => (
-          <div key={animal.id} className={styles.card}>
-            <div className={styles.cardImage}>
-              <div className={styles.cardBadges}>
-                <span className={styles.typeBadge}>{animal.type}</span>
-                <span className={styles.availBadge}>AVAILABLE</span>
+      {loading ? (
+        <p>Loading animals...</p>
+      ) : visible.length === 0 ? (
+        <p>No animals found.</p>
+      ) : (
+        <div className={styles.grid}>
+          {visible.map((animal) => (
+            <div key={animal._id} className={styles.card}>
+              <div className={styles.cardImage}>
+                <div className={styles.cardBadges}>
+                  <span className={styles.typeBadge}>{animal.type}</span>
+                  <span className={styles.availBadge}>AVAILABLE</span>
+                </div>
+                {animal.images?.[0] ? (
+                  <img src={animal.images[0]} alt={animal.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
+                ) : (
+                  `photo · ${animal.name}`
+                )}
               </div>
-              {animal.image}
-            </div>
-            <div className={styles.cardBody}>
-              <h3 className={styles.cardName}>
-                {animal.name}
-                <span className={styles.cardLocation}>{animal.location}</span>
-              </h3>
-              <p className={styles.cardMeta}>{animal.breed} · {animal.age} · {animal.gender}</p>
-              <div className={styles.cardTrait}>
-                <span className={styles.traitDot}>●</span>
-                {animal.trait}
+              <div className={styles.cardBody}>
+                <h3 className={styles.cardName}>
+                  {animal.name}
+                  <span className={styles.cardLocation}>{animal.location}</span>
+                </h3>
+                <p className={styles.cardMeta}>
+                  {[animal.breed, animal.age ? `${animal.age} yrs` : null, animal.gender]
+                    .filter(Boolean)
+                    .join(" · ")}
+                </p>
+                <Link href={`/adopt/${animal._id}`} className={styles.meetBtn}>
+                  Meet {animal.name}
+                </Link>
               </div>
-              <Link href={`/adopt/${animal.id}`} className={styles.meetBtn}>
-                Meet {animal.name}
-              </Link>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
     </section>
   );
 }

@@ -1,9 +1,14 @@
+"use client";
+
+import { useState } from "react";
 import styles from "./Donate.module.css";
 import Link from "next/link";
 
-const amounts = ["$20", "$50", "$100", "$250"];
+const amounts = [500, 1000, 2000, 5000];
 
 export default function Donate() {
+  const [selected, setSelected] = useState(amounts[1]);
+
   return (
     <section className={styles.section}>
       <div className={styles.imagePlaceholder}>
@@ -19,18 +24,19 @@ export default function Donate() {
         </p>
 
         <div className={styles.amounts}>
-          {amounts.map((amt, i) => (
+          {amounts.map((amt) => (
             <button
               key={amt}
-              className={`${styles.amountBtn} ${i === 1 ? styles.amountBtnActive : ""}`}
+              className={`${styles.amountBtn} ${amt === selected ? styles.amountBtnActive : ""}`}
+              onClick={() => setSelected(amt)}
             >
-              {amt}
+              ₹{amt}
             </button>
           ))}
         </div>
 
         <div className={styles.donateActions}>
-          <Link href="/donate" className={styles.donateBtn}>Donate $50</Link>
+          <Link href={`/donate?amount=${selected}`} className={styles.donateBtn}>Donate ₹{selected}</Link>
           <span className={styles.secureNote}>Secure payment via Razorpay</span>
         </div>
       </div>
