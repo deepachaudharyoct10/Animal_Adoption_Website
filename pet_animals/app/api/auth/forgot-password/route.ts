@@ -12,16 +12,16 @@ export async function POST(request: NextRequest){
         const {email} = body;
         if(!email){
             return NextResponse.json({
-                "message": "pls enter the mail id"
-            })
+                message: "pls enter the mail id"
+            }, { status: 400 })
         }
         await connectDB();
         const findUser = await User.findOne({email});
         if(!findUser){
             return NextResponse.json({
                 message:"Please enter an existing User"
-    
-            })
+
+            }, { status: 404 })
         }
         
         const token = crypto.randomBytes(32).toString("hex");
