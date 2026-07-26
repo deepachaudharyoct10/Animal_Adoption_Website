@@ -60,22 +60,24 @@ export default function AdminDonationsPage() {
           <div className={styles.cardHeader}>
             <h2 className={styles.cardTitle}>Monthly breakdown</h2>
           </div>
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Month</th>
-                <th>Amount</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Object.entries(byMonth).map(([month, amount]) => (
-                <tr key={month}>
-                  <td>{month}</td>
-                  <td>₹{amount}</td>
+          <div className={styles.tableWrap}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>Month</th>
+                  <th>Amount</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {Object.entries(byMonth).map(([month, amount]) => (
+                  <tr key={month}>
+                    <td>{month}</td>
+                    <td>₹{amount}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
       )}
 
@@ -88,30 +90,32 @@ export default function AdminDonationsPage() {
         ) : donations.length === 0 ? (
           <p className={styles.muted}>No donations yet.</p>
         ) : (
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Donor</th>
-                <th>Email</th>
-                <th>Amount</th>
-                <th>Purpose</th>
-                <th>Transaction ID</th>
-                <th>Date</th>
-              </tr>
-            </thead>
-            <tbody>
-              {donations.map((d) => (
-                <tr key={d._id}>
-                  <td>{d.donorName}</td>
-                  <td>{d.email || "-"}</td>
-                  <td>₹{d.amount}</td>
-                  <td>{d.purpose || "-"}</td>
-                  <td>{d.transactionId}</td>
-                  <td>{new Date(d.createdAt).toLocaleDateString()}</td>
+          <div className={styles.tableWrap}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>Donor</th>
+                  <th>Email</th>
+                  <th>Amount</th>
+                  <th>Purpose</th>
+                  <th>Transaction ID</th>
+                  <th>Date</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {donations.map((d) => (
+                  <tr key={d._id}>
+                    <td>{d.donorName}</td>
+                    <td>{d.email || "-"}</td>
+                    <td>₹{d.amount}</td>
+                    <td>{d.purpose || "-"}</td>
+                    <td>{d.transactionId}</td>
+                    <td>{new Date(d.createdAt).toLocaleDateString()}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>

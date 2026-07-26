@@ -48,49 +48,51 @@ export default function AdminReportsPage() {
         ) : reports.length === 0 ? (
           <p className={styles.muted}>No rescue reports yet.</p>
         ) : (
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Photo</th>
-                <th>Reporter</th>
-                <th>Animal type</th>
-                <th>Location</th>
-                <th>Description</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {reports.map((r) => (
-                <tr key={r._id}>
-                  <td><img src={r.photo} alt="report" className={styles.thumb} /></td>
-                  <td>
-                    {r.reporterName}
-                    <br />
-                    <a href={`tel:${r.reporterPhone}`} style={{ color: "#999" }}>{r.reporterPhone}</a>
-                  </td>
-                  <td>{r.animalType}</td>
-                  <td>{r.location}</td>
-                  <td style={{ maxWidth: 260 }}>{r.description}</td>
-                  <td>
-                    <span className={`${styles.badge} ${styles[badgeByStatus[r.rescueStatus]]}`} style={{ marginBottom: 6, display: "inline-block" }}>
-                      {r.rescueStatus}
-                    </span>
-                    <br />
-                    <select
-                      className={styles.select}
-                      value={r.rescueStatus}
-                      disabled={updatingId === r._id}
-                      onChange={(e) => updateStatus(r._id, e.target.value)}
-                    >
-                      <option value="pending">Pending</option>
-                      <option value="rescued">Rescued</option>
-                      <option value="not rescued">Not rescued</option>
-                    </select>
-                  </td>
+          <div className={styles.tableWrap}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>Photo</th>
+                  <th>Reporter</th>
+                  <th>Animal type</th>
+                  <th>Location</th>
+                  <th>Description</th>
+                  <th>Status</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {reports.map((r) => (
+                  <tr key={r._id}>
+                    <td><img src={r.photo} alt="report" className={styles.thumb} /></td>
+                    <td>
+                      {r.reporterName}
+                      <br />
+                      <a href={`tel:${r.reporterPhone}`} style={{ color: "#999" }}>{r.reporterPhone}</a>
+                    </td>
+                    <td>{r.animalType}</td>
+                    <td>{r.location}</td>
+                    <td style={{ maxWidth: 260 }}>{r.description}</td>
+                    <td>
+                      <span className={`${styles.badge} ${styles[badgeByStatus[r.rescueStatus]]}`} style={{ marginBottom: 6, display: "inline-block" }}>
+                        {r.rescueStatus}
+                      </span>
+                      <br />
+                      <select
+                        className={styles.select}
+                        value={r.rescueStatus}
+                        disabled={updatingId === r._id}
+                        onChange={(e) => updateStatus(r._id, e.target.value)}
+                      >
+                        <option value="pending">Pending</option>
+                        <option value="rescued">Rescued</option>
+                        <option value="not rescued">Not rescued</option>
+                      </select>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>

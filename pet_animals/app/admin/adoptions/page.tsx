@@ -48,57 +48,59 @@ export default function AdminAdoptionsPage() {
         ) : requests.length === 0 ? (
           <p className={styles.muted}>No adoption requests yet.</p>
         ) : (
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th>Applicant</th>
-                <th>Contact</th>
-                <th>Animal</th>
-                <th>Occupation</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {requests.map((r) => (
-                <tr key={r._id}>
-                  <td>{r.fullName}<br /><span className={styles.muted}>{r.address}</span></td>
-                  <td>
-                    <a href={`mailto:${r.email}`} style={{ color: "#E8553A" }}>{r.email}</a>
-                    <br />
-                    <a href={`tel:${r.phoneNumber}`} style={{ color: "#999" }}>{r.phoneNumber}</a>
-                  </td>
-                  <td>{r.animal?.name} ({r.animal?.type})</td>
-                  <td>{r.occupation}</td>
-                  <td>
-                    <span className={`${styles.badge} ${styles[badgeByStatus[r.status]]}`}>{r.status}</span>
-                  </td>
-                  <td>
-                    {r.status === "pending" ? (
-                      <>
-                        <button
-                          className={`${styles.actionBtn} ${styles.approveBtn}`}
-                          disabled={updatingId === r._id}
-                          onClick={() => updateStatus(r._id, "approved")}
-                        >
-                          Approve
-                        </button>
-                        <button
-                          className={`${styles.actionBtn} ${styles.rejectBtn}`}
-                          disabled={updatingId === r._id}
-                          onClick={() => updateStatus(r._id, "rejected")}
-                        >
-                          Reject
-                        </button>
-                      </>
-                    ) : (
-                      <span className={styles.muted}>—</span>
-                    )}
-                  </td>
+          <div className={styles.tableWrap}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th>Applicant</th>
+                  <th>Contact</th>
+                  <th>Animal</th>
+                  <th>Occupation</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {requests.map((r) => (
+                  <tr key={r._id}>
+                    <td>{r.fullName}<br /><span className={styles.muted}>{r.address}</span></td>
+                    <td>
+                      <a href={`mailto:${r.email}`} style={{ color: "#E8553A" }}>{r.email}</a>
+                      <br />
+                      <a href={`tel:${r.phoneNumber}`} style={{ color: "#999" }}>{r.phoneNumber}</a>
+                    </td>
+                    <td>{r.animal?.name} ({r.animal?.type})</td>
+                    <td>{r.occupation}</td>
+                    <td>
+                      <span className={`${styles.badge} ${styles[badgeByStatus[r.status]]}`}>{r.status}</span>
+                    </td>
+                    <td>
+                      {r.status === "pending" ? (
+                        <>
+                          <button
+                            className={`${styles.actionBtn} ${styles.approveBtn}`}
+                            disabled={updatingId === r._id}
+                            onClick={() => updateStatus(r._id, "approved")}
+                          >
+                            Approve
+                          </button>
+                          <button
+                            className={`${styles.actionBtn} ${styles.rejectBtn}`}
+                            disabled={updatingId === r._id}
+                            onClick={() => updateStatus(r._id, "rejected")}
+                          >
+                            Reject
+                          </button>
+                        </>
+                      ) : (
+                        <span className={styles.muted}>—</span>
+                      )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>

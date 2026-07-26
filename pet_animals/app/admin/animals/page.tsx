@@ -214,45 +214,47 @@ export default function AdminAnimalsPage() {
         {loading ? (
           <p className={styles.muted}>Loading...</p>
         ) : (
-          <table className={styles.table}>
-            <thead>
-              <tr>
-                <th></th>
-                <th>Name</th>
-                <th>Type</th>
-                <th>Breed</th>
-                <th>Location</th>
-                <th>Status</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {animals.map((animal) => (
-                <tr key={animal._id}>
-                  <td>
-                    {animal.images?.[0] ? (
-                      <img src={animal.images[0]} alt={animal.name} className={styles.thumb} />
-                    ) : (
-                      <div className={styles.thumb} />
-                    )}
-                  </td>
-                  <td>{animal.name}</td>
-                  <td>{animal.type}</td>
-                  <td>{animal.breed || "-"}</td>
-                  <td>{animal.location}</td>
-                  <td>
-                    <span className={`${styles.badge} ${animal.status === "available" ? styles.badgeAvailable : styles.badgeAdopted}`}>
-                      {animal.status}
-                    </span>
-                  </td>
-                  <td>
-                    <button className={`${styles.actionBtn} ${styles.editBtn}`} onClick={() => openEditForm(animal)}>Edit</button>
-                    <button className={`${styles.actionBtn} ${styles.deleteBtn}`} onClick={() => handleDelete(animal._id)}>Delete</button>
-                  </td>
+          <div className={styles.tableWrap}>
+            <table className={styles.table}>
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Breed</th>
+                  <th>Location</th>
+                  <th>Status</th>
+                  <th>Actions</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody>
+                {animals.map((animal) => (
+                  <tr key={animal._id}>
+                    <td>
+                      {animal.images?.[0] ? (
+                        <img src={animal.images[0]} alt={animal.name} className={styles.thumb} />
+                      ) : (
+                        <div className={styles.thumb} />
+                      )}
+                    </td>
+                    <td>{animal.name}</td>
+                    <td>{animal.type}</td>
+                    <td>{animal.breed || "-"}</td>
+                    <td>{animal.location}</td>
+                    <td>
+                      <span className={`${styles.badge} ${animal.status === "available" ? styles.badgeAvailable : styles.badgeAdopted}`}>
+                        {animal.status}
+                      </span>
+                    </td>
+                    <td>
+                      <button className={`${styles.actionBtn} ${styles.editBtn}`} onClick={() => openEditForm(animal)}>Edit</button>
+                      <button className={`${styles.actionBtn} ${styles.deleteBtn}`} onClick={() => handleDelete(animal._id)}>Delete</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         )}
       </div>
     </div>

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import styles from "./admin.module.css";
@@ -17,6 +18,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
   const ready = useAdminGuard();
   const pathname = usePathname();
   const router = useRouter();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   function handleLogout() {
     localStorage.removeItem("token");
@@ -34,7 +36,23 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
 
   return (
     <div className={styles.shell}>
-      <aside className={styles.sidebar}>
+      <header className={styles.mobileHeader}>
+        <button className={styles.hamburger} onClick={() => setSidebarOpen(true)} aria-label="Open menu">
+          ☰
+        </button>
+        <span className={styles.logoName}>Haven Admin</span>
+      </header>
+
+      <div
+        className={`${styles.overlay} ${sidebarOpen ? styles.overlayVisible : ""}`}
+        onClick={() => setSidebarOpen(false)}
+      />
+
+      <aside className={`${styles.sidebar} ${sidebarOpen ? styles.sidebarOpen : ""}`}>
+        <button className={styles.closeSidebarBtn} onClick={() => setSidebarOpen(false)} aria-label="Close menu">
+          ✕
+        </button>
+
         <Link href="/" className={styles.logo}>
           <div className={styles.logoIcon}>H</div>
           <span className={styles.logoName}>Haven Admin</span>
@@ -45,6 +63,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
             key={item.href}
             href={item.href}
             className={`${styles.navLink} ${pathname === item.href ? styles.navLinkActive : ""}`}
+            onClick={() => setSidebarOpen(false)}
           >
             {item.label}
           </Link>
