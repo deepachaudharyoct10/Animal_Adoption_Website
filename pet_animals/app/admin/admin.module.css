@@ -384,10 +384,15 @@
 }
 
 @media (max-width: 900px) {
+  .shell {
+    flex-direction: column;
+  }
+
   .mobileHeader {
     display: flex;
     align-items: center;
     gap: 14px;
+    width: 100%;
     padding: 14px 20px;
     background: linear-gradient(180deg, #161616, #121212);
     border-bottom: 1px solid #2A2A2A;
