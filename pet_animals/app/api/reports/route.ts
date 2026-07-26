@@ -2,6 +2,9 @@ import { verifyToken } from "@/lib/auth";
 import { connectDB } from "@/lib/db";
 import { uploadImage } from "@/lib/cloudinary";
 import { RescueReport } from "@/lib/models/RescueReport";
+// Imported so Mongoose registers the User model before .populate("reporter", ...)
+// runs below — populate() needs the referenced model registered by name.
+import "@/lib/models/User";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(request: NextRequest) {

@@ -1,5 +1,4 @@
 import {Schema, model, models} from "mongoose";
-import { User } from "./User";
 const DonationSchema = new Schema({
     donor:{
         type: Schema.Types.ObjectId,

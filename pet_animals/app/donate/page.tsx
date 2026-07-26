@@ -2,7 +2,6 @@
 
 import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import Link from "next/link";
 import styles from "./page.module.css";
 import Navbar from "@/components/Navbar/Navbar";
 import Footer from "@/components/Footer/Footer";
@@ -124,12 +123,6 @@ function DonateForm() {
           ) : (
             <form onSubmit={handleDonate}>
               {error && <p className={styles.error}>{error}</p>}
-
-              {!isLoggedIn() && (
-                <p className={styles.error}>
-                  Please <Link href="/login">log in</Link> to donate.
-                </p>
-              )}
 
               <div className={styles.amounts}>
                 {presetAmounts.map((amt) => (
