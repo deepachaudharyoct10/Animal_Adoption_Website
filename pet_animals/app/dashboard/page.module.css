@@ -1,0 +1,163 @@
+.page {
+  background-color: #0D0D0D;
+  min-height: 100vh;
+}
+
+.hero {
+  padding: 64px 56px 40px;
+}
+
+.title {
+  font-size: 40px;
+  font-weight: 900;
+  color: #FFFFFF;
+  margin: 0 0 8px;
+  letter-spacing: -1px;
+}
+
+.subtitle {
+  font-size: 15px;
+  color: #666666;
+}
+
+.content {
+  padding: 0 56px 80px;
+}
+
+.statsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.statCard {
+  background: linear-gradient(145deg, #1A1A1A, #161616);
+  border: 1px solid #2A2A2A;
+  border-radius: 16px;
+  padding: 22px;
+}
+
+.statValue {
+  font-size: 30px;
+  font-weight: 900;
+  color: #FFFFFF;
+  letter-spacing: -0.5px;
+}
+
+.statLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: #777777;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-top: 6px;
+  display: block;
+}
+
+.section {
+  background: linear-gradient(145deg, #1A1A1A, #161616);
+  border: 1px solid #2A2A2A;
+  border-radius: 18px;
+  padding: 28px;
+  margin-bottom: 24px;
+}
+
+.sectionTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin: 0 0 20px;
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.table th {
+  text-align: left;
+  color: #666666;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  padding: 10px 12px;
+  border-bottom: 1px solid #2A2A2A;
+  white-space: nowrap;
+}
+
+.table td {
+  padding: 12px;
+  border-bottom: 1px solid #202020;
+  color: #CCCCCC;
+  vertical-align: middle;
+}
+
+.table tr:last-child td {
+  border-bottom: none;
+}
+
+.thumb {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  object-fit: cover;
+  background-color: #252525;
+}
+
+.badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+
+.badgeApproved, .badgeRescued {
+  background: rgba(106, 154, 90, 0.15);
+  border: 1px solid rgba(106, 154, 90, 0.35);
+  color: #6A9A5A;
+}
+
+.badgePending {
+  background: rgba(232, 178, 58, 0.15);
+  border: 1px solid rgba(232, 178, 58, 0.35);
+  color: #E8B23A;
+}
+
+.badgeRejected, .badgeNotRescued {
+  background: rgba(232, 85, 58, 0.15);
+  border: 1px solid rgba(232, 85, 58, 0.35);
+  color: #E8553A;
+}
+
+.muted {
+  color: #666666;
+  font-size: 13px;
+}
+
+@media (max-width: 768px) {
+  .hero {
+    padding: 40px 20px 24px;
+  }
+
+  .title {
+    font-size: 30px;
+  }
+
+  .content {
+    padding: 0 20px 56px;
+  }
+
+  .section {
+    padding: 20px;
+  }
+}

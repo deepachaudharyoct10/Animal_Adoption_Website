@@ -13,6 +13,7 @@ interface StoredUser {
 export default function Navbar() {
   const router = useRouter();
   const [user, setUser] = useState<StoredUser | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const stored = localStorage.getItem("user");
@@ -26,6 +27,7 @@ export default function Navbar() {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
     setUser(null);
+    setMenuOpen(false);
     router.push("/");
   }
 
@@ -49,10 +51,36 @@ export default function Navbar() {
       <div className={styles.navActions}>
         {user ? (
           <>
+            {/* Desktop: plain text links */}
+            <Link href="/dashboard" className={`${styles.loginLink} ${styles.desktopOnly}`}>My Dashboard</Link>
             {user.role === "admin" && (
-              <Link href="/admin" className={styles.loginLink}>Admin</Link>
+              <Link href="/admin" className={`${styles.loginLink} ${styles.desktopOnly}`}>Admin</Link>
             )}
-            <button onClick={handleLogout} className={styles.signupBtn}>Log out</button>
+            <button onClick={handleLogout} className={`${styles.signupBtn} ${styles.desktopOnly}`}>Log out</button>
+
+            {/* Mobile: single user icon that opens a dropdown */}
+            <div className={styles.userMenu}>
+              <button
+                className={styles.userMenuBtn}
+                onClick={() => setMenuOpen((open) => !open)}
+                aria-label="Account menu"
+              >
+                👤
+              </button>
+
+              {menuOpen && (
+                <>
+                  <div className={styles.userMenuOverlay} onClick={() => setMenuOpen(false)} />
+                  <div className={styles.userMenuDropdown}>
+                    <Link href="/dashboard" onClick={() => setMenuOpen(false)}>My Dashboard</Link>
+                    {user.role === "admin" && (
+                      <Link href="/admin" onClick={() => setMenuOpen(false)}>Admin</Link>
+                    )}
+                    <button onClick={handleLogout}>Log out</button>
+                  </div>
+                </>
+              )}
+            </div>
           </>
         ) : (
           <>
